@@ -300,32 +300,59 @@ def generate_invoice_pdf(filepath, project_code, project_name, days,
     ]))
     story.append(main_tbl)
 
-    total_tbl = Table(
-        [[P("<u><b>PAIEMENT A FIN DU MOIS</b></u>", s_rb),
-          P(f"<b>Total (en euros HT)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-            f"{fmt_amount(total_ht)}</b>", s_br)]],
-        colWidths=[W * 0.55, W * 0.45],
-    )
-    total_tbl.setStyle(TableStyle([
-        ("BOX",          (0, 0), (-1, -1), 0.5, colors.black),
-        ("VALIGN",       (0, 0), (-1, -1), "MIDDLE"),
-        ("TOPPADDING",   (0, 0), (-1, -1), 5),
-        ("BOTTOMPADDING",(0, 0), (-1, -1), 5),
-        ("LEFTPADDING",  (0, 0), (-1, -1), 5),
-        ("RIGHTPADDING", (0, 0), (-1, -1), 5),
-    ]))
+    # Calcul TVA
+    if tva_rate is not None:
+        tva_amount = total_ht * tva_rate / 100
+        total_ttc  = total_ht + tva_amount
+        tva_label  = tva_key.split("\u2014")[0].strip()
+
+    # Tableau de totaux
+    if tva_rate is None:
+        total_rows = [
+            [P("<u><b>PAIEMENT A FIN DU MOIS</b></u>", s_rb),
+             P(f"<b>Total (en euros HT)\u00a0\u00a0\u00a0\u00a0\u00a0"
+               f"{fmt_amount(total_ht)}</b>", s_br)],
+        ]
+        total_style = [
+            ("BOX",          (0, 0), (-1, -1), 0.5, colors.black),
+            ("VALIGN",       (0, 0), (-1, -1), "MIDDLE"),
+            ("TOPPADDING",   (0, 0), (-1, -1), 5),
+            ("BOTTOMPADDING",(0, 0), (-1, -1), 5),
+            ("LEFTPADDING",  (0, 0), (-1, -1), 5),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 5),
+        ]
+    else:
+        total_rows = [
+            [P("<u><b>PAIEMENT A FIN DU MOIS</b></u>", s_rb),
+             P(f"Total HT\u00a0\u00a0\u00a0\u00a0\u00a0{fmt_amount(total_ht)}", s_br)],
+            [P("", s_n),
+             P(f"TVA {tva_label}\u00a0: {fmt_amount(tva_amount)}", s_br)],
+            [P("", s_n),
+             P(f"<b>Total TTC\u00a0\u00a0\u00a0\u00a0\u00a0{fmt_amount(total_ttc)}</b>",
+               s_br)],
+        ]
+        total_style = [
+            ("BOX",          (0, 0), (-1, -1), 0.5, colors.black),
+            ("INNERGRID",    (1, 0), (1, -1),  0.3, colors.HexColor("#cccccc")),
+            ("SPAN",         (0, 0), (0, -1)),
+            ("VALIGN",       (0, 0), (-1, -1), "MIDDLE"),
+            ("TOPPADDING",   (0, 0), (-1, -1), 5),
+            ("BOTTOMPADDING",(0, 0), (-1, -1), 5),
+            ("LEFTPADDING",  (0, 0), (-1, -1), 5),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 5),
+            # Ligne Total TTC avec fond léger
+            ("BACKGROUND",   (1, 2), (1, 2),   colors.HexColor("#f0f4ff")),
+        ]
+
+    total_tbl = Table(total_rows, colWidths=[W * 0.55, W * 0.45])
+    total_tbl.setStyle(TableStyle(total_style))
     story += [total_tbl, Spacer(1, 0.2*cm)]
 
-    # TVA
+    # Mention TVA sous le tableau
     if tva_rate is None:
         story.append(P("TVA Non applicable, art. 293 B du CGI", s_n))
         story.append(Spacer(1, 0.9*cm))
     else:
-        tva_amount = total_ht * tva_rate / 100
-        total_ttc  = total_ht + tva_amount
-        tva_label  = tva_key.split("\u2014")[0].strip()
-        story.append(P(f"TVA {tva_label}\u00a0: {fmt_amount(tva_amount)}", s_n))
-        story.append(P(f"<b>Total TTC\u00a0: {fmt_amount(total_ttc)}</b>", s_b))
         story.append(Spacer(1, 0.9*cm))
 
     # IBAN / BIC
@@ -344,11 +371,25 @@ def generate_invoice_pdf(filepath, project_code, project_name, days,
     iban_wrap.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP")]))
     story += [iban_wrap, Spacer(1, 2*cm)]
 
+    # Signature
+    sig_path = profile.get("signature", "")
+    if sig_path and os.path.isfile(sig_path):
+        try:
+            from reportlab.platypus import Image as RLImage
+            sig_img = RLImage(sig_path, width=4*cm, height=2*cm,
+                              kind="proportional")
+            sig_cell = sig_img
+        except Exception:
+            sig_cell = P(f"<br/><br/><br/>{full_name}", s_c)
+    else:
+        sig_cell = P(f"<br/><br/><br/>{full_name}", s_c)
+
     sig = Table(
-        [[P("", s_n), P(f"<br/><br/><br/>{full_name}", s_c)]],
+        [[P("", s_n), sig_cell]],
         colWidths=[W * 0.5, W * 0.5],
     )
-    sig.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP")]))
+    sig.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"),
+                              ("ALIGN",  (1, 0), (1, 0),  "CENTER")]))
     story.append(sig)
 
     doc.build(story)
@@ -454,6 +495,38 @@ class ProfileDialog(tk.Toplevel):
         self._iban = self._make_field(form, "IBAN", p.get("iban", ""), r); r += 1
         self._bic  = self._make_field(form, "BIC",  p.get("bic",  ""), r); r += 1
 
+        # ── Signature ──
+        self._section_label(form, "SIGNATURE (optionnel)", r); r += 2
+
+        tk.Label(form, text="Fichier image", bg=BG_CARD, fg=TEXT_MED,
+                 font=("Arial", 9), anchor="e").grid(
+            row=r, column=0, sticky="e", padx=(0, 10), pady=4)
+
+        sig_row = tk.Frame(form, bg=BG_CARD)
+        sig_row.grid(row=r, column=1, sticky="ew", pady=4)
+        sig_row.columnconfigure(0, weight=1)
+
+        self._sig_path = tk.StringVar(value=p.get("signature", ""))
+        sig_entry = tk.Entry(sig_row, textvariable=self._sig_path,
+                             bg=BG_INPUT, fg=TEXT_MAIN, relief=tk.FLAT, bd=6,
+                             insertbackground=TEXT_MAIN,
+                             highlightbackground=BORDER, highlightthickness=1,
+                             font=("Arial", 9), width=24)
+        sig_entry.grid(row=0, column=0, sticky="ew", padx=(0, 6))
+
+        tk.Button(sig_row, text="Parcourir\u2026",
+                  command=self._browse_signature,
+                  bg=ACCENT_DIM, fg=TEXT_MAIN, relief=tk.FLAT,
+                  font=("Arial", 9), padx=8, pady=4,
+                  cursor="hand2", activebackground=ACCENT,
+                  activeforeground="white").grid(row=0, column=1)
+
+        tk.Label(form,
+                 text="PNG, JPG ou GIF — apparaîtra en bas à droite de la facture",
+                 bg=BG_CARD, fg=TEXT_DIM, font=("Arial", 8, "italic")).grid(
+            row=r + 1, column=1, sticky="w")
+        r += 2
+
         # Boutons
         btns = tk.Frame(self, bg=BG_CARD, padx=22, pady=14)
         btns.pack(fill=tk.X)
@@ -468,6 +541,16 @@ class ProfileDialog(tk.Toplevel):
                   font=("Arial", 10, "bold"), padx=16, pady=7,
                   cursor="hand2", activebackground=ACCENT_HOV,
                   activeforeground="white").pack(side=tk.RIGHT)
+
+    def _browse_signature(self):
+        path = filedialog.askopenfilename(
+            parent=self,
+            title="Choisir une image de signature",
+            filetypes=[("Images", "*.png *.jpg *.jpeg *.gif *.bmp"),
+                       ("Tous les fichiers", "*.*")],
+        )
+        if path:
+            self._sig_path.set(path)
 
     def _save(self):
         prenom = self._prenom.get().strip()
@@ -484,18 +567,19 @@ class ProfileDialog(tk.Toplevel):
             return
 
         self.result = {
-            "id":      self._profile.get("id") or str(uuid.uuid4()),
-            "prenom":  prenom,
-            "nom":     nom,
-            "adresse1": self._addr1.get().strip(),
-            "adresse2": self._addr2.get().strip(),
-            "tel":     self._tel.get().strip(),
-            "email":   self._email.get().strip(),
-            "siret":   self._siret.get().strip(),
-            "iban":    self._iban.get().strip(),
-            "bic":     self._bic.get().strip(),
-            "tjm":     tjm,
-            "tva":     self._tva_var.get(),
+            "id":        self._profile.get("id") or str(uuid.uuid4()),
+            "prenom":    prenom,
+            "nom":       nom,
+            "adresse1":  self._addr1.get().strip(),
+            "adresse2":  self._addr2.get().strip(),
+            "tel":       self._tel.get().strip(),
+            "email":     self._email.get().strip(),
+            "siret":     self._siret.get().strip(),
+            "iban":      self._iban.get().strip(),
+            "bic":       self._bic.get().strip(),
+            "tjm":       tjm,
+            "tva":       self._tva_var.get(),
+            "signature": self._sig_path.get().strip(),
         }
         self.destroy()
 
