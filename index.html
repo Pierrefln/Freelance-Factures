@@ -12,23 +12,23 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:           #080b14;
-      --surface:      #0f1623;
-      --surface2:     #161f30;
-      --border:       rgba(255,255,255,.09);
-      --text:         #ffffff;
-      --muted:        #6b7280;
-      --accent:       #3b82f6;
-      --accent-dim:   rgba(59,130,246,.15);
-      --success:      #10b981;
+      --bg:           #0c0c0d;
+      --surface:      #1a1a1b;
+      --surface2:     #242425;
+      --border:       rgba(255,255,255,.1);
+      --text:         #f4f4f5;
+      --muted:        #a1a1aa;
+      --accent:       #8b5cf6;
+      --accent-dim:   rgba(139,92,246,.15);
+      --success:      #22c55e;
       --danger:       #f87171;
       --dbg:          rgba(248,113,113,.10);
       --radius:       12px;
-      --shadow:       0 1px 2px rgba(0,0,0,.5), 0 8px 32px rgba(0,0,0,.4);
+      --shadow:       0 1px 3px rgba(0,0,0,.5), 0 8px 32px rgba(0,0,0,.35);
       --input-bg:     #ffffff;
-      --input-text:   #0f172a;
-      --input-border: #e2e8f0;
-      --input-focus:  #3b82f6;
+      --input-text:   #18181b;
+      --input-border: #e4e4e7;
+      --input-focus:  #8b5cf6;
     }
 
     body {
@@ -40,13 +40,13 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       background-image:
-        radial-gradient(ellipse 100% 60% at 50% -5%, rgba(30,58,138,.5) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 30% at 80% 80%, rgba(16,185,129,.05) 0%, transparent 50%);
+        radial-gradient(ellipse 100% 55% at 50% -5%, rgba(139,92,246,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 25% at 88% 88%, rgba(34,197,94,.05) 0%, transparent 50%);
     }
 
     /* ── Top bar ──────────────────────────────────────────── */
     .top-bar {
-      background: rgba(10,10,10,.9);
+      background: rgba(12,12,13,.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,.07);
@@ -73,7 +73,7 @@
       width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(59,130,246,.4);
+      box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(139,92,246,.4);
     }
     .top-bar-sub {
       font-size: 12px;
@@ -107,9 +107,9 @@
       height: 1px;
       background: linear-gradient(90deg,
         transparent 0%,
-        rgba(59,130,246,.6) 20%,
-        rgba(99,152,255,.9) 50%,
-        rgba(59,130,246,.6) 80%,
+        rgba(139,92,246,.6) 20%,
+        rgba(167,139,250,.9) 50%,
+        rgba(139,92,246,.6) 80%,
         transparent 100%);
     }
     .section-title {
@@ -117,7 +117,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: #4b5563;
+      color: #71717a;
       margin-bottom: 22px;
     }
 
@@ -142,7 +142,7 @@
     }
     .profile-detail {
       font-size: 13px;
-      color: #6b7280;
+      color: #a1a1aa;
       line-height: 1.5;
     }
     .profile-badges {
@@ -154,12 +154,12 @@
     .profile-badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(59,130,246,.1);
-      border: 1px solid rgba(59,130,246,.25);
+      background: rgba(139,92,246,.1);
+      border: 1px solid rgba(139,92,246,.25);
       border-radius: 6px;
       padding: 4px 10px;
       font-size: 12px;
-      color: #60a5fa;
+      color: #a78bfa;
       font-weight: 600;
       letter-spacing: .1px;
     }
@@ -193,14 +193,14 @@
     select:focus, input[type="number"]:focus, input[type="text"]:focus,
     input[type="email"]:focus, textarea:focus {
       border-color: var(--input-focus);
-      box-shadow: 0 0 0 3px rgba(59,130,246,.22);
+      box-shadow: 0 0 0 3px rgba(139,92,246,.22);
     }
 
     /* ── Calendar ────────────────────────────────────────── */
     .cal-header {
       font-size: 12px;
       font-weight: 600;
-      color: #94a3b8;
+      color: #a1a1aa;
       margin-bottom: 12px;
       text-transform: uppercase;
       letter-spacing: .7px;
@@ -219,7 +219,7 @@
       text-align: center;
       font-size: 9.5px;
       font-weight: 700;
-      color: #475569;
+      color: #71717a;
       padding: 0 0 8px;
       letter-spacing: .8px;
       text-transform: uppercase;
@@ -235,9 +235,9 @@
       user-select: none;
       font-weight: 400;
     }
-    .cal-day:hover  { background: rgba(59,130,246,.18); color: #93c5fd; }
-    .cal-day.today  { color: #60a5fa; font-weight: 700; background: rgba(59,130,246,.08); }
-    .cal-day.sel    { background: var(--accent); color: #fff; font-weight: 700; box-shadow: 0 2px 10px rgba(59,130,246,.55); }
+    .cal-day:hover  { background: rgba(139,92,246,.18); color: #c4b5fd; }
+    .cal-day.today  { color: #a78bfa; font-weight: 700; background: rgba(139,92,246,.08); }
+    .cal-day.sel    { background: var(--accent); color: #fff; font-weight: 700; box-shadow: 0 2px 10px rgba(139,92,246,.55); }
 
     /* ── Invoice rows ─────────────────────────────────────── */
     #rows-container { display: flex; flex-direction: column; gap: 12px; }
@@ -249,7 +249,7 @@
       background: var(--surface2);
       transition: border-color .18s, box-shadow .18s;
     }
-    .inv-card:focus-within { border-color: rgba(59,130,246,.4); box-shadow: 0 0 0 2px rgba(59,130,246,.1); }
+    .inv-card:focus-within { border-color: rgba(139,92,246,.4); box-shadow: 0 0 0 2px rgba(139,92,246,.1); }
 
     .row-top { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
 
@@ -278,14 +278,14 @@
       min-height: 48px;
       transition: border-color .18s, box-shadow .18s;
     }
-    .ac-input:focus { border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(59,130,246,.22); }
+    .ac-input:focus { border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(139,92,246,.22); }
     .ac-input.selected { font-weight: 500; }
 
     .ac-drop {
       display: none;
       position: absolute;
       top: calc(100% + 4px); left: 0; right: 0;
-      background: #1a2235;
+      background: #1a1a1b;
       border: 1px solid rgba(255,255,255,.1);
       border-radius: 10px;
       box-shadow: 0 12px 40px rgba(0,0,0,.6);
@@ -300,8 +300,8 @@
       border-bottom: 1px solid rgba(255,255,255,.06);
     }
     .ac-item:last-child { border-bottom: none; }
-    .ac-item:hover, .ac-item.hi { background: rgba(59,130,246,.12); }
-    .ac-code { font-family: monospace; font-size: 11px; font-weight: 700; color: #60a5fa; min-width: 52px; }
+    .ac-item:hover, .ac-item.hi { background: rgba(139,92,246,.12); }
+    .ac-code { font-family: monospace; font-size: 11px; font-weight: 700; color: #a78bfa; min-width: 52px; }
     .ac-name { font-size: 13px; color: #e5e7eb; }
     .ac-empty { padding: 14px; text-align: center; color: var(--muted); font-size: 13px; }
 
@@ -311,7 +311,7 @@
     .row-total { font-size: 13px; font-weight: 600; color: var(--accent); white-space: nowrap; padding-bottom: 1px; min-width: 70px; text-align: right; }
 
     .btn-remove {
-      background: none; border: none; cursor: pointer; color: #4b5563;
+      background: none; border: none; cursor: pointer; color: #71717a;
       width: 28px; height: 28px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 13px; transition: all .15s; flex-shrink: 0;
@@ -335,12 +335,12 @@
       transition: border-color .18s, box-shadow .18s;
       background: var(--input-bg);
     }
-    .desc-box textarea:focus { border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(59,130,246,.22); }
-    .desc-hint { font-size: 11.5px; color: #475569; margin-top: 6px; }
+    .desc-box textarea:focus { border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(139,92,246,.22); }
+    .desc-hint { font-size: 11.5px; color: #71717a; margin-top: 6px; }
 
 
     /* ── Empty state ──────────────────────────────────────── */
-    #empty-state { text-align: center; padding: 32px; color: #4b5563; font-size: 13px; }
+    #empty-state { text-align: center; padding: 32px; color: #71717a; font-size: 13px; }
 
     /* ── Bottom bar ───────────────────────────────────────── */
     .bottom-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
@@ -350,7 +350,7 @@
     /* ── Buttons ──────────────────────────────────────────── */
     .btn { border-radius: 8px; cursor: pointer; font: inherit; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; border: 1px solid transparent; transition: all .18s ease; }
     .btn-outline { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); color: #e2e8f0; padding: 9px 16px; font-size: 13.5px; }
-    .btn-outline:hover { border-color: rgba(59,130,246,.5); color: #93c5fd; background: rgba(59,130,246,.1); }
+    .btn-outline:hover { border-color: rgba(139,92,246,.5); color: #c4b5fd; background: rgba(139,92,246,.1); }
     .btn-sm { padding: 7px 13px; font-size: 12.5px; }
     .btn-ghost { background: none; border: none; cursor: pointer; font: inherit; font-size: 12px; color: var(--muted); padding: 0; transition: color .15s; }
     .btn-ghost:hover { color: var(--danger); }
@@ -362,7 +362,7 @@
       font-weight: 700;
       border: none;
       border-radius: 10px;
-      box-shadow: 0 4px 16px rgba(59,130,246,.5), 0 1px 0 rgba(255,255,255,.1) inset;
+      box-shadow: 0 4px 16px rgba(139,92,246,.5), 0 1px 0 rgba(255,255,255,.1) inset;
       letter-spacing: -.1px;
     }
     .btn-gen:hover {
@@ -398,7 +398,7 @@
     .modal-overlay.open { display: flex; }
 
     .modal-box {
-      background: #0f1623;
+      background: #1a1a1b;
       border: 1px solid rgba(255,255,255,.1);
       border-radius: 16px;
       box-shadow: 0 40px 120px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.04);
@@ -414,7 +414,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(59,130,246,.7) 30%, rgba(99,152,255,1) 50%, rgba(59,130,246,.7) 70%, transparent);
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,.7) 30%, rgba(99,152,255,1) 50%, rgba(139,92,246,.7) 70%, transparent);
       border-radius: 16px 16px 0 0;
     }
     .modal-title {
@@ -440,7 +440,7 @@
     .form-field label {
       font-size: 12px;
       font-weight: 600;
-      color: #94a3b8;
+      color: #a1a1aa;
       letter-spacing: .2px;
     }
     .form-field input, .form-field select {
@@ -461,7 +461,7 @@
       position: absolute;
       top: 20px; right: 20px;
       background: none; border: none; cursor: pointer;
-      color: #4b5563; font-size: 20px;
+      color: #71717a; font-size: 20px;
       width: 32px; height: 32px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       transition: all .15s;
@@ -484,9 +484,9 @@
 
     /* ── Row number badge ─────────────────────────────────── */
     .row-idx {
-      background: rgba(59,130,246,.1);
-      border: 1px solid rgba(59,130,246,.2);
-      color: #60a5fa;
+      background: rgba(139,92,246,.1);
+      border: 1px solid rgba(139,92,246,.2);
+      color: #a78bfa;
       font-size: 11.5px;
     }
 
@@ -495,23 +495,23 @@
     .field-days input { min-height: 48px; }
 
     /* ── Desc toggle ──────────────────────────────────────── */
-    .desc-toggle { color: #4b5563; font-size: 12.5px; margin-top: 12px; }
-    .desc-toggle:hover { color: #60a5fa; }
+    .desc-toggle { color: #71717a; font-size: 12.5px; margin-top: 12px; }
+    .desc-toggle:hover { color: #a78bfa; }
 
     /* ── Row total ────────────────────────────────────────── */
     .row-total { color: #34d399; font-size: 14px; font-weight: 700; }
 
     /* ── Summary ──────────────────────────────────────────── */
-    #summary { color: #6b7280; font-size: 13.5px; }
+    #summary { color: #a1a1aa; font-size: 13.5px; }
 
     /* ── Bottom bar ───────────────────────────────────────── */
     .bottom-bar { padding: 6px 0; gap: 16px; }
 
     /* ── Empty state ──────────────────────────────────────── */
-    #empty-state { padding: 40px; color: #374151; font-size: 13.5px; }
+    #empty-state { padding: 40px; color: #71717a; font-size: 13.5px; }
 
     /* ── Tva note ─────────────────────────────────────────── */
-    .tva-note { color: #475569; font-size: 11.5px; margin-top: 5px; }
+    .tva-note { color: #71717a; font-size: 11.5px; margin-top: 5px; }
 
     /* ── Toast ────────────────────────────────────────────── */
     #toast { font-size: 14px; }
@@ -664,6 +664,14 @@
         </select>
         <div class="tva-note">Taux de TVA applicables en micro-entreprise</div>
       </div>
+      <div class="form-field full">
+        <label>Signature <span style="font-weight:normal;color:var(--muted)">(optionnel)</span></label>
+        <div id="sig-preview-wrap" style="margin-bottom:8px;display:none;align-items:center;gap:8px">
+          <img id="sig-preview" style="max-height:60px;border:1px solid var(--input-border);border-radius:6px;padding:4px;background:#fff" />
+          <button type="button" onclick="clearSignature()" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:12px">Supprimer</button>
+        </div>
+        <input type="file" id="f-signature" accept="image/*" onchange="previewSignature(this)" style="color:var(--input-text);background:var(--input-bg);border:1px solid var(--input-border);padding:6px;border-radius:6px;width:100%;cursor:pointer" />
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeProfileModal()">Annuler</button>
@@ -810,6 +818,19 @@ function openProfileModal(idx) {
   document.getElementById('f-tjm').value    = p.tjm != null ? p.tjm : '';
   document.getElementById('f-tva').value    = p.tva    || '0';
 
+  // Signature preview
+  const sigInput = document.getElementById('f-signature');
+  sigInput.value = '';
+  delete sigInput.dataset.b64;
+  const sigWrap = document.getElementById('sig-preview-wrap');
+  if (p.signature) {
+    document.getElementById('sig-preview').src = p.signature;
+    sigInput.dataset.b64 = p.signature;
+    sigWrap.style.display = 'flex';
+  } else {
+    sigWrap.style.display = 'none';
+  }
+
   // Delete button (only for existing non-last profiles)
   const wrap = document.getElementById('modal-delete-wrap');
   if (!isNew && profiles.length > 1) {
@@ -823,6 +844,25 @@ function openProfileModal(idx) {
 
 function closeProfileModal() {
   document.getElementById('profile-modal').classList.remove('open');
+}
+
+function previewSignature(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const b64 = e.target.result;
+    document.getElementById('sig-preview').src = b64;
+    document.getElementById('sig-preview-wrap').style.display = 'flex';
+    input.dataset.b64 = b64;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function clearSignature() {
+  const input = document.getElementById('f-signature');
+  input.value = '';
+  delete input.dataset.b64;
+  document.getElementById('sig-preview-wrap').style.display = 'none';
 }
 
 function saveProfile() {
@@ -844,7 +884,9 @@ function saveProfile() {
     iban:    document.getElementById('f-iban').value.trim(),
     bic:     document.getElementById('f-bic').value.trim(),
     tjm:     parseFloat(document.getElementById('f-tjm').value) || 0,
-    tva:     document.getElementById('f-tva').value,
+    tva:       document.getElementById('f-tva').value,
+    signature: document.getElementById('f-signature').dataset.b64
+               || (editingProfileIdx !== -1 ? (profiles[editingProfileIdx].signature || '') : ''),
   };
 
   if (editingProfileIdx === -1) {
@@ -1198,34 +1240,54 @@ function buildPDF(code, name, days, month, year, invoiceDay, descTxt) {
 
   y = doc.lastAutoTable.finalY;
 
-  // Total row
-  const rH = 11, sepX = margin + usable*0.47;
-  doc.setDrawColor(0); doc.setLineWidth(0.3);
-  doc.rect(margin, y, usable, rH);
-  doc.line(sepX, y, sepX, y+rH);
+  // ── Totals section (pleine largeur, pas de séparateur vertical) ────────────
+  doc.setFontSize(9); doc.setLineWidth(0.3); doc.setDrawColor(0);
 
-  doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(180,0,0);
-  doc.text(pm, margin+4, y+7);
-  const pmW2 = doc.getTextWidth(pm);
-  doc.setDrawColor(180,0,0); doc.setLineWidth(0.25);
-  doc.line(margin+4, y+7.7, margin+4+pmW2, y+7.7);
-
-  doc.setTextColor(0); doc.setDrawColor(0); doc.setFont('helvetica','bold');
-  doc.text(`Total (en euros HT)     ${fmtPDF(totalHT)}`, rx-4, y+7, {align:'right'});
-  y += rH+4;
-
-  // TVA
-  doc.setFont('helvetica','normal');
   if (tvaRate === 0) {
-    doc.text('TVA Non applicable, art. 293 B du CGI', margin, y);
-  } else {
-    doc.text(`TVA ${tvaRate}%     ${fmtPDF(totalTVA)}`, margin, y);
-    y += 6;
-    doc.setFont('helvetica','bold');
-    doc.text(`Total TTC     ${fmtPDF(totalTTC)}`, margin, y);
+    // 1 ligne : PAIEMENT gauche | Total TTC droite
+    const rH = 11;
+    doc.rect(margin, y, usable, rH);
+    doc.setFont('helvetica','bold'); doc.setTextColor(180,0,0);
+    doc.text(pm, margin + 4, y + 7);
+    const pmW2 = doc.getTextWidth(pm);
+    doc.setDrawColor(180,0,0); doc.setLineWidth(0.25);
+    doc.line(margin + 4, y + 7.7, margin + 4 + pmW2, y + 7.7);
+    doc.setDrawColor(0); doc.setLineWidth(0.3);
+    doc.setTextColor(0);
+    doc.text('Total (en euros TTC)', rx - 32, y + 7, {align:'right'});
+    doc.text(fmtPDF(totalHT), rx - 4, y + 7, {align:'right'});
+    y += rH + 4;
     doc.setFont('helvetica','normal');
+    doc.text('TVA Non applicable, art. 293 B du CGI', margin, y);
+    y += 14;
+
+  } else {
+    // 3 lignes pleine largeur — pas de séparateur vertical
+    const rowH  = 9;
+    const totalH = rowH * 3;
+    // Bordure extérieure + séparateurs horizontaux
+    doc.rect(margin, y, usable, totalH);
+    doc.line(margin, y + rowH,   margin + usable, y + rowH);
+    doc.line(margin, y + rowH*2, margin + usable, y + rowH*2);
+    doc.setTextColor(0); doc.setFont('helvetica','normal');
+    // Ligne 1 : Total HT — libellé | montant séparés
+    doc.text('Total HT', rx - 32, y + rowH/2 + 1.5, {align:'right'});
+    doc.text(fmtPDF(totalHT), rx - 4, y + rowH/2 + 1.5, {align:'right'});
+    // Ligne 2 : TVA — libellé | montant séparés
+    doc.text(`TVA ${tvaRate}%`, rx - 32, y + rowH + rowH/2 + 1.5, {align:'right'});
+    doc.text(fmtPDF(totalTVA), rx - 4, y + rowH + rowH/2 + 1.5, {align:'right'});
+    // Ligne 3 : PAIEMENT gauche + Total TTC droite (gras)
+    doc.setFont('helvetica','bold'); doc.setTextColor(180,0,0);
+    doc.text(pm, margin + 4, y + rowH*2 + rowH/2 + 1.5);
+    const pmW2 = doc.getTextWidth(pm);
+    doc.setDrawColor(180,0,0); doc.setLineWidth(0.25);
+    doc.line(margin + 4, y + rowH*2 + rowH/2 + 2.2, margin + 4 + pmW2, y + rowH*2 + rowH/2 + 2.2);
+    doc.setDrawColor(0); doc.setLineWidth(0.3);
+    doc.setTextColor(0);
+    doc.text('Total TTC', rx - 32, y + rowH*2 + rowH/2 + 1.5, {align:'right'});
+    doc.text(fmtPDF(totalTTC), rx - 4, y + rowH*2 + rowH/2 + 1.5, {align:'right'});
+    y += totalH + 14;
   }
-  y += 14;
 
   // IBAN / BIC
   if (prof.iban) {
@@ -1243,6 +1305,18 @@ function buildPDF(code, name, days, month, year, invoiceDay, descTxt) {
       doc.setFont('helvetica','normal'); doc.text(prof.bic, valX, y);
       y += 16;
     }
+  }
+
+  // Signature + nom
+  if (prof.signature) {
+    try {
+      const sigW = 50, sigH = 25;
+      const sigX = pW - margin - sigW;
+      doc.addImage(prof.signature, sigX, y, sigW, sigH);
+      y += sigH + 4;
+      doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(0);
+      doc.text(prof.prenom + ' ' + prof.nom, sigX + sigW / 2, y, {align:'center'});
+    } catch(e) {}
   }
 
   const mm = String(month).padStart(2,'0');
