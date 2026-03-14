@@ -121,22 +121,7 @@ PROFILES_FILE = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "profiles.json"
 )
 
-DEFAULT_PROFILE = {
-    "id":      "default",
-    "prenom":  "Pierre-Alexis",
-    "nom":     "Fillon",
-    "adresse1": "19 rue Voltaire",
-    "adresse2": "94700 Maisons-Alfort",
-    "tel":     "07 81 50 50 27",
-    "email":   "pierre.alexisf@gmail.com",
-    "siret":   "98848421700017",
-    "iban":    "FR7640618804860004068190345",
-    "bic":     "BOUSFRPPXXX",
-    "tjm":     240,
-    "tva":     "Non applicable (art. 293 B CGI)",
-}
-
-DEFAULT_DIR = "/Users/pa-fillon/Factures BPI"
+DEFAULT_DIR = os.path.expanduser("~")
 
 
 # ============================================================
@@ -150,12 +135,12 @@ def load_profiles():
             with open(PROFILES_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
             profiles = data.get("profiles", [])
-            current  = data.get("current", "default")
+            current  = data.get("current", None)
             if profiles:
                 return profiles, current
         except Exception:
             pass
-    return [DEFAULT_PROFILE.copy()], "default"
+    return [], None
 
 
 def save_profiles(profiles, current_id):
@@ -821,7 +806,7 @@ class App(tk.Tk):
         for p in self._profiles:
             if p["id"] == self._current_profile_id:
                 return p
-        return self._profiles[0] if self._profiles else DEFAULT_PROFILE.copy()
+        return self._profiles[0] if self._profiles else None
 
     def _styled_btn(self, parent, text, cmd, bg_c, fg_c="white",
                     hover=None, **kwargs):
@@ -875,6 +860,32 @@ class App(tk.Tk):
 
         card = tk.Frame(self._profile_card_frame, bg=BG_CARD, padx=18, pady=14)
         card.pack(fill=tk.X, padx=14, pady=(14, 6))
+
+        if p is None:
+            # Aucun profil — afficher un message d'invitation
+            av = tk.Frame(card, bg="#3a2000", width=46, height=46)
+            av.pack(side=tk.LEFT, padx=(0, 16))
+            av.pack_propagate(False)
+            tk.Label(av, text="!", bg="#3a2000", fg="#ffaa44",
+                     font=("Arial", 18, "bold")).pack(expand=True)
+
+            info = tk.Frame(card, bg=BG_CARD)
+            info.pack(side=tk.LEFT, fill=tk.X, expand=True)
+            tk.Label(info, text="Aucun profil configuré",
+                     font=("Arial", 13, "bold"), fg="#ffaa44",
+                     bg=BG_CARD).pack(anchor="w")
+            tk.Label(info,
+                     text="Créez un profil pour pouvoir générer des factures.",
+                     font=("Arial", 9), fg=TEXT_MED, bg=BG_CARD).pack(anchor="w")
+
+            btns = tk.Frame(card, bg=BG_CARD)
+            btns.pack(side=tk.RIGHT, padx=(16, 0))
+            self._styled_btn(btns, "+ Créer un profil",
+                             self._new_profile_dialog,
+                             SUCCESS, "white", hover=SUCCESS_HOV,
+                             font=("Arial", 9), padx=12, pady=6
+                             ).pack(side=tk.LEFT)
+            return
 
         # Avatar (initiales)
         initials = (p.get("prenom", "?")[:1] + p.get("nom", "?")[:1]).upper()
@@ -1086,7 +1097,13 @@ class App(tk.Tk):
                 "Puis relancez l'application.")
             return
 
-        profile   = self._get_active_profile()
+        profile = self._get_active_profile()
+        if profile is None:
+            messagebox.showerror(
+                "Profil requis",
+                "Aucun profil configuré.\n\n"
+                "Créez un profil avant de générer des factures.")
+            return
         full_name = f"{profile.get('prenom', '')} {profile.get('nom', '')}"
         generated, errors = [], []
 
