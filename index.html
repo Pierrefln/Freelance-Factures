@@ -733,43 +733,43 @@
     <div class="form-grid">
       <div class="form-field">
         <label>Prénom</label>
-        <input type="text" id="f-prenom" placeholder="Pierre-Alexis" />
+        <input type="text" id="f-prenom" placeholder="Ex : Jean" />
       </div>
       <div class="form-field">
         <label>Nom</label>
-        <input type="text" id="f-nom" placeholder="Fillon" />
+        <input type="text" id="f-nom" placeholder="Ex : Dupont" />
       </div>
       <div class="form-field full">
         <label>Adresse (rue)</label>
-        <input type="text" id="f-adresse" placeholder="19 rue Voltaire" />
+        <input type="text" id="f-adresse" placeholder="Ex : 12 rue de la Paix" />
       </div>
       <div class="form-field full">
         <label>Ville (code postal + ville)</label>
-        <input type="text" id="f-ville" placeholder="94700 Maisons-Alfort" />
+        <input type="text" id="f-ville" placeholder="Ex : 75001 Paris" />
       </div>
       <div class="form-field">
         <label>Téléphone</label>
-        <input type="text" id="f-tel" placeholder="07 81 50 50 27" />
+        <input type="text" id="f-tel" placeholder="Ex : 06 12 34 56 78" />
       </div>
       <div class="form-field">
         <label>Email</label>
-        <input type="email" id="f-email" placeholder="email@exemple.fr" />
+        <input type="email" id="f-email" placeholder="Ex : contact@exemple.fr" />
       </div>
       <div class="form-field full">
         <label>SIRET</label>
-        <input type="text" id="f-siret" placeholder="000 000 000 00000" maxlength="20" />
+        <input type="text" id="f-siret" placeholder="Ex : 123 456 789 00012" maxlength="20" />
       </div>
       <div class="form-field full">
         <label>IBAN</label>
-        <input type="text" id="f-iban" placeholder="FR76..." />
+        <input type="text" id="f-iban" placeholder="Ex : FR76 1234 5678 9012 3456 7890 123" />
       </div>
       <div class="form-field">
         <label>BIC</label>
-        <input type="text" id="f-bic" placeholder="BOUSFRPPXXX" />
+        <input type="text" id="f-bic" placeholder="Ex : BNPAFRPPXXX" />
       </div>
       <div class="form-field">
         <label>Taux journalier moyen (€/jour)</label>
-        <input type="number" id="f-tjm" min="0" step="1" placeholder="240" />
+        <input type="number" id="f-tjm" min="0" step="1" placeholder="Ex : 500" />
       </div>
       <div class="form-field full">
         <label>TVA applicable</label>
@@ -1063,7 +1063,7 @@ window.addEventListener('load', () => {
   renderProfileSelect();
   renderProfileCard();
   renderCalendar();
-  addRow();
+  addRow(false);
 });
 
 // ── Formatters ────────────────────────────────────────────────────────────────
@@ -1116,7 +1116,7 @@ function defaultDesc(name) {
 }
 
 // ── Row management ──────────────────────────────────────────────────────────────
-function addRow() {
+function addRow(autoFocus = true) {
   const id = ++rowId;
   rowState[id] = { code: '', days: 5, descEdited: false };
   const idx  = Object.keys(rowState).length;
@@ -1160,7 +1160,7 @@ function addRow() {
   document.getElementById('rows-container').appendChild(card);
   refreshEmpty();
   refreshSummary();
-  document.getElementById(`ac-${id}`).focus();
+  if (autoFocus) document.getElementById(`ac-${id}`).focus();
 }
 
 function removeRow(id) {
